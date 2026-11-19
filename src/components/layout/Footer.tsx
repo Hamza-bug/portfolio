@@ -16,7 +16,7 @@ export default function Footer() {
             </h3>
             <div className="relative mt-4 h-16 w-52">
               <Image
-                src="/images/hamza-signature.jpg"
+                src="/images/hamza-signature-transparent.png"
                 alt="Hamza Imtiaz handwritten signature"
                 fill
                 sizes="(max-width: 768px) 100vw, 240px"

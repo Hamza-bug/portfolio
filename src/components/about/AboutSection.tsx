@@ -1,78 +1,86 @@
-import Image from "next/image";
+"use client";
 
-import { personalProfile } from "@/data/site";
+import AbstractSculpture from "@/components/about/DigitalUniverse";
 
 export default function AboutSection() {
-  const hasCv = Boolean(personalProfile.cvUrl);
-
   return (
-    <section id="about" data-reveal className="relative py-20 md:py-28">
-      <div className="section-shell">
-        <div className="mb-10 max-w-2xl">
-          <p className="text-[11px] uppercase tracking-[0.38em] text-[#a9c8e6]">A little about me</p>
-          <h2 className="mt-5 text-3xl font-medium uppercase tracking-[-0.05em] text-white md:text-5xl">
-            A LITTLE ABOUT ME
-          </h2>
-        </div>
+    <section id="about" data-reveal className="about-section relative overflow-hidden py-24 md:py-32">
+      <div className="about-ambient" aria-hidden="true" />
+      <div className="section-shell relative z-10">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 xl:gap-20">
+          <div className="about-copy">
+            <p className="about-kicker"><span /> About me</p>
+            <h2>Beyond<span>the Code.</span></h2>
 
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="relative mx-auto aspect-square w-full max-w-[420px] lg:max-w-none">
-            <Image
-              src="/images/hamza-portrait-transparent.png"
-              alt="Hamza Imtiaz portrait"
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-contain"
-            />
-          </div>
-
-          <div className="flex flex-col justify-center">
-            <div className="space-y-8 rounded-[32px] border border-white/10 bg-[rgba(10,12,18,0.78)] p-6 md:p-8">
-              <p className="max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">
-                {personalProfile.about}
+            <div className="about-editorial">
+              <p>
+                I’m <em>Hamza Imtiaz</em>, a software developer interested in the moment
+                when an intricate idea becomes clear, useful and natural to use.
               </p>
-
-              <div className="flex flex-wrap gap-3">
-                {["JavaScript", "Angular", "React.js", "React Native", "Next.js", "Node.js"].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.24em] text-slate-200"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-col gap-6 border-t border-white/10 pt-6 md:flex-row md:items-end md:justify-between">
-                <div className="min-w-0">
-                  <p className="text-[11px] uppercase tracking-[0.3em] text-slate-400">Signature</p>
-                  <div className="relative mt-4 h-20 w-full max-w-[260px]">
-                    <Image
-                      src="/images/hamza-signature.jpg"
-                      alt="Hamza Imtiaz handwritten signature"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 260px"
-                      className="object-contain object-left"
-                    />
-                  </div>
-                </div>
-
-                <a
-                  href={hasCv ? personalProfile.cvUrl : undefined}
-                  aria-disabled={!hasCv}
-                  className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-[10px] uppercase tracking-[0.28em] transition ${
-                    hasCv
-                      ? "bg-[#edf6ff] text-[#070b11] hover:bg-white"
-                      : "cursor-not-allowed border border-white/10 bg-white/5 text-slate-400"
-                  }`}
-                >
-                  Download CV
-                </a>
-              </div>
+              <p>
+                I work across web and mobile applications, finding the balance between
+                considered design, sound engineering and the real needs of the people
+                using a product.
+              </p>
+              <p>
+                My approach is practical: understand the problem, remove unnecessary
+                complexity, and build with enough care that the work continues to make
+                sense long after it is released.
+              </p>
             </div>
           </div>
+
+          <AbstractSculpture />
         </div>
       </div>
+
+      <style jsx>{`
+        .about-editorial {
+          max-width: 560px;
+          margin-top: 34px;
+        }
+
+        .about-editorial p {
+          margin: 0;
+          color: #9ca7b4;
+          font-family: var(--font-manrope);
+          font-size: clamp(.94rem, 1.25vw, 1.04rem);
+          line-height: 1.95;
+          letter-spacing: -.006em;
+        }
+
+        .about-editorial p + p {
+          margin-top: 16px;
+        }
+
+        .about-editorial p:first-child {
+          color: #eef3f7;
+          font-size: clamp(1.02rem, 1.5vw, 1.16rem);
+          line-height: 1.82;
+        }
+
+        .about-editorial em {
+          color: #ffffff;
+          font-family: var(--font-editorial);
+          font-size: 1.16em;
+          font-style: italic;
+          letter-spacing: -.025em;
+        }
+
+        @media (max-width: 767px) {
+          .about-editorial {
+            margin-top: 28px;
+          }
+
+          .about-editorial p {
+            line-height: 1.82;
+          }
+
+          .about-editorial p + p {
+            margin-top: 14px;
+          }
+        }
+      `}</style>
     </section>
   );
 }
