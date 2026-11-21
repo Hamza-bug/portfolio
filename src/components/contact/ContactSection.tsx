@@ -1,214 +1,142 @@
 "use client";
 
-import { useState } from "react";
-
 import { personalProfile } from "@/data/site";
+import { rowan } from "@/app/fonts/rowan";
 
-type FormValues = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
+const CONTACT_DETAILS = {
+  email: "hamzaimtiaz246@gmail.com",
+  gmailUrl:
+    "https://mail.google.com/mail/?view=cm&fs=1&to=hamzaimtiaz246@gmail.com",
+  linkedinUrl: "https://www.linkedin.com/in/hamza-imtiaz-58979a209/",
+  githubUrl: "https://github.com/Hamza-bug",
+} as const;
 
-type FormErrors = Partial<Record<keyof FormValues, string>>;
-
-const initialValues: FormValues = {
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-};
+const Arrow = ({ diagonal = false }: { diagonal?: boolean }) => (
+  <span
+    aria-hidden="true"
+    className={`inline-block text-[1.1em] leading-none transition-transform duration-300 group-hover:-translate-y-0.5 ${
+      diagonal ? "-rotate-45 group-hover:rotate-0" : "group-hover:translate-x-1"
+    }`}
+  >
+    ↗
+  </span>
+);
 
 export default function ContactSection() {
-  const [formValues, setFormValues] = useState<FormValues>(initialValues);
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [feedback, setFeedback] = useState("");
-
-  const validate = (values: FormValues) => {
-    const nextErrors: FormErrors = {};
-
-    if (!values.name.trim()) {
-      nextErrors.name = "Please enter your name.";
-    }
-
-    if (!values.email.trim()) {
-      nextErrors.email = "Please enter your email.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-      nextErrors.email = "Please enter a valid email address.";
-    }
-
-    if (!values.subject.trim()) {
-      nextErrors.subject = "Please add a subject.";
-    }
-
-    if (!values.message.trim()) {
-      nextErrors.message = "Please type a message.";
-    }
-
-    return nextErrors;
-  };
-
-  const handleChange = (field: keyof FormValues, value: string) => {
-    setFormValues((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: undefined }));
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const nextErrors = validate(formValues);
-    setErrors(nextErrors);
-
-    if (Object.keys(nextErrors).length > 0) {
-      setStatus("error");
-      setFeedback("Please correct the highlighted fields and try again.");
-      return;
-    }
-
-    setStatus("loading");
-    setFeedback("Sending your message...");
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Unable to send message.");
-      }
-
-      setStatus("success");
-      setFeedback(data.message || "Your message was sent successfully.");
-      setFormValues(initialValues);
-    } catch (error) {
-      setStatus("error");
-      setFeedback(
-        error instanceof Error
-          ? error.message
-          : "The contact form is not configured yet. Add a real email backend to enable sending.",
-      );
-    }
-  };
+  const projectMailUrl = CONTACT_DETAILS.gmailUrl;
 
   return (
-    <section id="contact" data-reveal className="py-20 md:py-28">
-      <div className="section-shell">
-        <div className="mb-12 max-w-2xl">
-          <p className="text-[11px] uppercase tracking-[0.38em] text-[#9fcaf7]">Contact</p>
-          <h2 className="mt-5 text-3xl font-medium uppercase tracking-[-0.05em] text-white md:text-5xl">
-            LET&apos;S BUILD SOMETHING GREAT.
-          </h2>
-        </div>
+    <section
+      id="contact"
+      data-reveal
+      className="relative isolate overflow-hidden bg-[#080909] text-[#f4f4f1]"
+      aria-labelledby="contact-heading"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 38% at 78% 18%, rgba(255,255,255,0.035), transparent 72%), radial-gradient(ellipse 48% 40% at 12% 72%, rgba(255,255,255,0.018), transparent 70%)",
+        }}
+      />
 
-        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="space-y-6 rounded-[28px] border border-white/10 bg-[rgba(13,16,22,0.84)] p-6">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">Email</p>
-              <a href={`mailto:${personalProfile.email}`} className="mt-2 block text-lg text-white hover:text-[#cbe7ff]">
-                {personalProfile.email}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 opacity-25">
+        <span className="absolute left-[12%] top-[19%] h-px w-px rounded-full bg-white" />
+        <span className="absolute right-[18%] top-[32%] h-px w-px rounded-full bg-white/70" />
+        <span className="absolute bottom-[28%] left-[72%] h-px w-px rounded-full bg-white/50" />
+        <span className="absolute bottom-[42%] left-[38%] h-px w-px rounded-full bg-white/40" />
+      </div>
+
+      <div className="mx-auto max-w-[1440px] px-6 sm:px-8 lg:px-12 xl:px-16">
+        <div className="border-t border-white/10" />
+
+        <div className="grid min-h-[560px] items-center gap-12 py-20 md:min-h-[640px] md:py-24 lg:grid-cols-[1fr_0.74fr] lg:gap-20 xl:min-h-[700px]">
+          <div>
+            <p className="mb-7 text-[10px] font-medium uppercase tracking-[0.38em] text-white/45 sm:text-[11px]">
+              Have a project in mind?
+            </p>
+
+            <h2
+              id="contact-heading"
+              className="max-w-[820px] text-[clamp(3.8rem,8vw,8.25rem)] font-medium uppercase leading-[0.82] tracking-[-0.075em] text-white"
+            >
+              <span className={`${rowan.className} block`} style={{ fontFamily: rowan.style.fontFamily, fontWeight: 400 }}>Let&apos;s Build</span>
+              <span className={`${rowan.className} mt-[0.10em] block text-[0.82em] font-normal normal-case italic tracking-[-0.055em] text-white/92`} style={{ fontFamily: rowan.style.fontFamily, fontStyle: "italic", fontWeight: 400 }}>
+                Something Great.
+              </span>
+            </h2>
+
+            <p className="mt-9 max-w-xl text-[15px] leading-7 text-white/48 sm:text-base sm:leading-8">
+              Have an idea, a project, or a challenge in mind? I&apos;m always interested in building meaningful digital
+              experiences and solving real-world problems.
+            </p>
+          </div>
+
+          <div className="lg:border-l lg:border-white/10 lg:pl-12 xl:pl-16">
+            <p className="text-[10px] uppercase tracking-[0.32em] text-white/35">Let&apos;s talk</p>
+            <p className="mt-4 font-serif text-3xl italic tracking-[-0.03em] text-white sm:text-4xl">
+              Let&apos;s talk about it.
+            </p>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <a
+                href={projectMailUrl}
+                className="group inline-flex min-h-14 items-center justify-between gap-8 rounded-full border border-white bg-[#f4f4f1] px-6 text-[11px] font-medium uppercase tracking-[0.22em] text-[#080909] transition-all duration-300 hover:bg-white/90 sm:min-w-[190px]"
+              >
+                <span>Start a Project</span>
+                <Arrow />
+              </a>
+
+              <a
+                href={CONTACT_DETAILS.gmailUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex min-h-14 items-center justify-between gap-8 rounded-full border border-white/20 px-6 text-[11px] font-medium uppercase tracking-[0.22em] text-white/75 transition-all duration-300 hover:border-white/55 hover:text-white sm:min-w-[170px]"
+              >
+                <span>Get in Touch</span>
+                <Arrow />
               </a>
             </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">LinkedIn</p>
-              <a href={personalProfile.linkedinUrl} target="_blank" rel="noreferrer" className="mt-2 block text-lg text-white hover:text-[#cbe7ff]">
-                Professional profile
+
+            <div className="mt-14 grid grid-cols-1 border-t border-white/10 sm:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)_minmax(0,1fr)] lg:grid-cols-1 xl:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)_minmax(0,1fr)]">
+              <a
+                href={CONTACT_DETAILS.gmailUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group min-w-0 border-b border-white/10 py-5 pr-5 transition-colors duration-300 sm:border-b-0 sm:border-r sm:pr-8 lg:border-b lg:border-r-0 lg:pr-0 lg:pb-5 xl:border-b-0 xl:border-r xl:pr-10"
+              >
+                <span className="block text-[9px] uppercase tracking-[0.28em] text-white/35">Email</span>
+                <span className="mt-2 block whitespace-nowrap text-sm text-white/80 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">
+                  {CONTACT_DETAILS.email}
+                </span>
               </a>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">GitHub</p>
-              <a href={personalProfile.githubUrl} target="_blank" rel="noreferrer" className="mt-2 block text-lg text-white hover:text-[#cbe7ff]">
-                github.com/Hamza-bug
+
+              <a
+                href={CONTACT_DETAILS.linkedinUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group border-b border-white/10 py-5 pr-5 transition-colors duration-300 sm:border-b-0 sm:border-r sm:px-5 lg:border-b lg:border-r-0 lg:px-0 lg:pb-5 xl:border-b-0 xl:border-r xl:px-5"
+              >
+                <span className="block text-[9px] uppercase tracking-[0.28em] text-white/35">LinkedIn</span>
+                <span className="mt-2 block text-sm text-white/80 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">
+                  LinkedIn ↗
+                </span>
               </a>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.26em] text-slate-400">WhatsApp</p>
-              <a href={personalProfile.whatsappUrl} target="_blank" rel="noreferrer" className="mt-2 block text-lg text-white hover:text-[#cbe7ff]">
-                Message on WhatsApp
+
+              <a
+                href={CONTACT_DETAILS.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group py-5 transition-colors duration-300 sm:pl-5 lg:pl-0 lg:pt-5 xl:pl-5"
+              >
+                <span className="block text-[9px] uppercase tracking-[0.28em] text-white/35">GitHub</span>
+                <span className="mt-2 block text-sm text-white/80 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">
+                  GitHub ↗
+                </span>
               </a>
             </div>
           </div>
-
-          <form onSubmit={handleSubmit} className="rounded-[28px] border border-white/10 bg-[rgba(13,16,22,0.84)] p-6">
-            <div className="grid gap-5 md:grid-cols-2">
-              <label className="block text-sm text-slate-300">
-                <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-slate-400">Name</span>
-                <input
-                  value={formValues.name}
-                  onChange={(event) => handleChange("name", event.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-[#8ec5ff]/60"
-                  aria-invalid={Boolean(errors.name)}
-                  aria-describedby={errors.name ? "name-error" : undefined}
-                />
-                {errors.name && <span id="name-error" className="mt-2 block text-xs text-red-300">{errors.name}</span>}
-              </label>
-
-              <label className="block text-sm text-slate-300">
-                <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-slate-400">Email</span>
-                <input
-                  type="email"
-                  value={formValues.email}
-                  onChange={(event) => handleChange("email", event.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-[#8ec5ff]/60"
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? "email-error" : undefined}
-                />
-                {errors.email && <span id="email-error" className="mt-2 block text-xs text-red-300">{errors.email}</span>}
-              </label>
-            </div>
-
-            <label className="mt-5 block text-sm text-slate-300">
-              <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-slate-400">Subject</span>
-              <input
-                value={formValues.subject}
-                onChange={(event) => handleChange("subject", event.target.value)}
-                className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-[#8ec5ff]/60"
-                aria-invalid={Boolean(errors.subject)}
-                aria-describedby={errors.subject ? "subject-error" : undefined}
-              />
-              {errors.subject && <span id="subject-error" className="mt-2 block text-xs text-red-300">{errors.subject}</span>}
-            </label>
-
-            <label className="mt-5 block text-sm text-slate-300">
-              <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-slate-400">Message</span>
-              <textarea
-                value={formValues.message}
-                onChange={(event) => handleChange("message", event.target.value)}
-                rows={6}
-                className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-[#8ec5ff]/60"
-                aria-invalid={Boolean(errors.message)}
-                aria-describedby={errors.message ? "message-error" : undefined}
-              />
-              {errors.message && <span id="message-error" className="mt-2 block text-xs text-red-300">{errors.message}</span>}
-            </label>
-
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="inline-flex items-center justify-center rounded-full bg-[#edf6ff] px-5 py-3 text-[10px] font-medium uppercase tracking-[0.28em] text-[#070b11] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {status === "loading" ? "Sending..." : "Send Message"}
-              </button>
-
-              {feedback && (
-                <p
-                  className={`text-xs ${
-                    status === "success" ? "text-emerald-300" : status === "error" ? "text-red-300" : "text-slate-300"
-                  }`}
-                >
-                  {feedback}
-                </p>
-              )}
-            </div>
-          </form>
         </div>
       </div>
     </section>

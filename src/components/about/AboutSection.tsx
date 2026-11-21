@@ -1,6 +1,7 @@
 "use client";
 
 import AbstractSculpture from "@/components/about/DigitalUniverse";
+import { rowan } from "@/app/fonts/rowan";
 
 export default function AboutSection() {
   return (
@@ -10,7 +11,10 @@ export default function AboutSection() {
         <div className="grid items-center gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 xl:gap-20">
           <div className="about-copy">
             <p className="about-kicker"><span /> About me</p>
-            <h2>Beyond<span>the Code.</span></h2>
+            <h2 className={rowan.className} style={{ fontFamily: rowan.style.fontFamily, fontStyle: "italic", fontWeight: 400 }}>
+              <span className="!block !ml-0">Beyond</span>
+              <span className="mt-[0.10em] !block">the Code.</span>
+            </h2>
 
             <div className="about-editorial">
               <p>

@@ -10,6 +10,8 @@ import {
   Smartphone,
 } from "lucide-react";
 
+import { rowan } from "@/app/fonts/rowan";
+
 const services = [
   {
     number: "01",
@@ -64,7 +66,17 @@ export default function ServicesSection() {
             <span /> What I do
           </p>
           <div>
-            <h2>WHAT I CAN BUILD</h2>
+            <h2
+              className={rowan.className}
+              style={{
+                fontFamily: rowan.style.fontFamily,
+                fontStyle: "italic",
+                fontWeight: 400,
+                wordSpacing: "0.16em",
+              }}
+            >
+              WHAT I CAN BUILD
+            </h2>
             <p>
               From digital experiences to powerful business applications, I turn
               ideas into practical software solutions.
@@ -132,7 +144,7 @@ export default function ServicesSection() {
 
         .services-header h2 {
           margin: 0;
-          font-family: var(--font-editorial);
+          font-family: inherit;
           font-size: clamp(3.1rem, 5vw, 5.4rem);
           font-style: italic;
           font-weight: 400;

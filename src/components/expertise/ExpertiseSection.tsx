@@ -8,6 +8,7 @@ import {
   SiReact,
 } from "@icons-pack/react-simple-icons";
 import { personalProfile } from "@/data/site";
+import { rowan } from "@/app/fonts/rowan";
 
 function BrandIcon({ name }: { name: string }) {
   const iconProps = { size: 72, "aria-label": name, title: name, role: "img" };
@@ -26,7 +27,7 @@ export default function ExpertiseSection() {
         <header className="expertise-header">
           <p className="expertise-kicker"><span /> Technology stack</p>
           <div>
-            <h2>My Expertise</h2>
+            <h2 className={rowan.className} style={{ fontFamily: rowan.style.fontFamily, fontStyle: "italic", fontWeight: 400 }}>My Expertise</h2>
             <p>Tools I use to turn thoughtful ideas into dependable digital products.</p>
           </div>
         </header>
@@ -87,7 +88,7 @@ export default function ExpertiseSection() {
 
         .expertise-header h2 {
           margin: 0;
-          font-family: var(--font-editorial);
+          font-family: inherit;
           font-size: clamp(3.4rem, 6vw, 6.8rem);
           font-style: italic;
           font-weight: 400;

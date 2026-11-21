@@ -2,6 +2,14 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import localFont from "next/font/local";
+
+const zodiak = localFont({
+  src: "../../app/fonts/Zodiak-Regular-Italic.woff2",
+  weight: "400",
+  style: "italic",
+  display: "swap",
+});
 
 const ParticlePortrait = dynamic(
   () => import("@/components/hero/ParticlePortrait"),
@@ -56,15 +64,16 @@ export default function HeroSection() {
 
       {/* Name Typography */}
       <h1
-        className="pointer-events-none absolute inset-x-3 bottom-[20%] z-10 whitespace-nowrap text-center text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.12)] sm:bottom-[14%] md:bottom-[8%]"
+        className={`${zodiak.className} pointer-events-none absolute inset-x-3 bottom-[20%] z-10 whitespace-nowrap text-center text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.12)] sm:bottom-[14%] md:bottom-[8%]`}
         style={{
-          fontFamily: "var(--font-editorial)",
+          fontWeight: 400,
           fontSize: "clamp(2.25rem, 9cqw, 10rem)",
           fontStyle: "italic",
           lineHeight: 0.9,
         }}
       >
-        Hamza Imtiaz
+        <span>Hamza</span>{" "}
+        <span className="ml-[0.12em]">Imtiaz</span>
       </h1>
     </section>
   );

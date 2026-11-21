@@ -4,6 +4,7 @@ import { ArrowUpRight, X } from "lucide-react";
 import { useState } from "react";
 
 import { personalProfile, type ProjectItem } from "@/data/site";
+import { rowan } from "@/app/fonts/rowan";
 
 const previewMap: Record<ProjectItem["preview"], { label: string; bars: number[] }> = {
   warehouse: { label: "Warehouse Ops", bars: [28, 44, 60, 52, 80, 68, 92] },
@@ -21,7 +22,7 @@ export default function ProjectsSection() {
       <div className="section-shell">
         <div className="mb-12 max-w-3xl">
           <p className="text-[11px] uppercase tracking-[0.38em] text-[#9fcaf7]">Portfolio</p>
-          <h2 className="mt-5 text-3xl font-medium uppercase tracking-[-0.05em] text-white md:text-5xl">
+          <h2 className={`${rowan.className} mt-5 text-3xl font-medium uppercase tracking-[-0.05em] text-white md:text-5xl`}>
             SELECTED WORK
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-300">
